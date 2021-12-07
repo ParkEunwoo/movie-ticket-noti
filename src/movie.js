@@ -1,6 +1,8 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
+import { CGV_URL } from './constants.js';
 import {url} from './url.js';
+import {formatDate} from './date.js';
 
 export async function getMovieList (theater, date) {
   const {data} = await axios.get(url(theater, date));
@@ -25,10 +27,12 @@ export async function getMovieList (theater, date) {
       const timeTables = Array.from($timeTables).map(timeTableElem => {
         const time = $(timeTableElem).find('em').text().trim();
         const seats = $(timeTableElem).find('span.txt-lightblue').text().substring(4).trim() || '매진';
+        const link = $(timeTableElem).find('a').attr('href');
 
         return {
           time,
           seats,
+          link: CGV_URL + link,
         };
       });
 
@@ -41,6 +45,7 @@ export async function getMovieList (theater, date) {
 
     return {
       title,
+      date: formatDate(date.toString()),
       hallList,
     }
   })
@@ -51,5 +56,29 @@ export async function getMovieList (theater, date) {
 export const filter = (movieList, title, type) => {
   const titleMovie = movieList.find(movie => movie.title === title);
 
-  return titleMovie.hallList.filter(hall => hall.type === type);
+  return {...titleMovie, hallList: [...titleMovie.hallList.filter(hall => hall.type === type)]};
+}
+
+export const template = (movie) => {
+  return `
+    <h1>${movie.title}</h1>
+    <div>${movie.date}</div>
+    <ul>
+      ${movie.hallList.map(hall => `
+        <li>
+          <h2>${hall.type}</h2>
+          <ul>
+            ${hall.timeTables.map(timeTable => `
+              <li>
+                <a href=${timeTable.link}>
+                  <strong>${timeTable.time}</strong><br/>
+                  <b>${timeTable.seats}</b> / <b>${hall.totalSeats}</b>
+                </a>
+              </li>
+            `).join('')}
+          </ul>
+        </li>
+      `).join('')}
+    </ul>
+  `;
 }

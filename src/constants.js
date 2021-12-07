@@ -1,4 +1,5 @@
 export const BASE_URL = `http://www.cgv.co.kr/common/showtimes/iframeTheater.aspx`;
+export const CGV_URL = `http://www.cgv.co.kr`;
 
 export const THEATER_CODE = {
   '강남': '0056',
