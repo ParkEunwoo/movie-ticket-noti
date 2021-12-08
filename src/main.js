@@ -9,7 +9,7 @@ async function main() {
   const hongdeaSpider = filter(movieList, '스파이더맨-노 웨이 홈', '2D');
   const sinchonSpider = filter(movieList, '스파이더맨-노 웨이 홈', '2D');
   const yeonnamSpider = filter(movieList, '스파이더맨-노 웨이 홈', '2D');
-  if (filteredMovie.hallList.length) {
+  if (hongdea.hallList.length > 0 || sinchon.hallList.length > 0 || yeonnam.hallList.length > 0) {
     // console.log(JSON.stringify(filteredMovie, null, 2))
     sendEmail(template(hongdeaSpider) + template(sinchonSpider) + template(yeonnamSpider));
   }
