@@ -6,13 +6,15 @@ async function main() {
   const sinchon = await getMovieList('신촌아트레온', 20211218);
   const yeonnam = await getMovieList('연남', 20211218);
   // console.log(JSON.stringify(movieList, null, 2))
-  const hongdeaSpider = filter(movieList, '스파이더맨-노 웨이 홈', '2D');
-  const sinchonSpider = filter(movieList, '스파이더맨-노 웨이 홈', '2D');
-  const yeonnamSpider = filter(movieList, '스파이더맨-노 웨이 홈', '2D');
+  const hongdeaSpider = filter(hongdea, '스파이더맨-노 웨이 홈', '2D');
+  const sinchonSpider = filter(sinchon, '스파이더맨-노 웨이 홈', '2D');
+  const yeonnamSpider = filter(yeonnam, '스파이더맨-노 웨이 홈', '2D');
   if (hongdeaSpider.hallList.length > 0 || sinchonSpider.hallList.length > 0 || yeonnamSpider.hallList.length > 0) {
-    // console.log(JSON.stringify(filteredMovie, null, 2))
     sendEmail(template(hongdeaSpider) + template(sinchonSpider) + template(yeonnamSpider));
   }
+  console.log(JSON.stringify(hongdea, null, 2))
+  console.log(JSON.stringify(sinchon, null, 2))
+  console.log(JSON.stringify(yeonnam, null, 2))
 }
 
 main();
