@@ -45,6 +45,7 @@ export async function getMovieList (theater, date) {
 
     return {
       title,
+      theater,
       date: formatDate(date.toString()),
       hallList,
     }
@@ -61,7 +62,7 @@ export const filter = (movieList, title, type) => {
 
 export const template = (movie) => {
   return `
-    <h1>${movie.title}</h1>
+    <h1>${movie.theater} ${movie.title}</h1>
     <div>${movie.date}</div>
     <ul>
       ${movie.hallList.map(hall => `
