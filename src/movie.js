@@ -57,6 +57,10 @@ export async function getMovieList (theater, date) {
 export const filter = (movieList, title, type) => {
   const titleMovie = movieList.find(movie => movie.title === title);
 
+  if (!titleMovie) {
+    return {title, hallList: []};
+  }
+  
   return {...titleMovie, hallList: [...titleMovie.hallList.filter(hall => hall.type === type)]};
 }
 
