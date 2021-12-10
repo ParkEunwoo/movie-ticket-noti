@@ -26,7 +26,8 @@ export async function getMovieList (theater, date) {
 
       const timeTables = Array.from($timeTables).map(timeTableElem => {
         const time = $(timeTableElem).find('em').text().trim();
-        const seats = $(timeTableElem).find('span.txt-lightblue').text().substring(4).trim() || '매진';
+        const seatText = $(timeTableElem).find('span.txt-lightblue').text().trim();
+        const seats = seatText.startsWith('잔여좌석') ? seatText.substring(4).trim() : seatText;
         const link = $(timeTableElem).find('a').attr('href');
 
         return {
@@ -60,8 +61,12 @@ export const filter = (movieList, title, type) => {
   if (!titleMovie) {
     return {title, hallList: []};
   }
+
+  const hallList = titleMovie.hallList
+    .filter(hall => hall.type === type)
+    .filter(hall => hall.timeTables.some(({seats}) => seats.endsWith('석')));
   
-  return {...titleMovie, hallList: [...titleMovie.hallList.filter(hall => hall.type === type)]};
+  return {...titleMovie, hallList};
 }
 
 export const template = (movie) => {
