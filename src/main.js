@@ -2,7 +2,7 @@ import {getMovieList, filter, template} from './movie.js';
 import {sendEmail} from './email.js';
 
 async function main() {
-  const dateList = Array.from({length: 7}, (_, i) => i + 20211220);
+  const dateList = Array.from({length: 7}, (_, i) => i + 20211225);
   const iparksMovieList = await Promise.all(dateList.map(v => getMovieList('용산아이파크몰', v)));
   const imaxFilteredMovieList = iparksMovieList.map(v => filter(v, '스파이더맨-노 웨이 홈', 'IMAX LASER 2D'));
 
