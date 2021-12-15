@@ -9,6 +9,13 @@ export async function getMovieList (theater, date) {
 
   const $ = cheerio.load(data);
 
+  const movieDate = $('#slider .on > .day > a').children().text().trim();
+  const [, month, day] = /([\d]+)월[\s\n]*[월화수목금토일][\s\n]*([\d]+)/.exec(movieDate)
+
+  if (!String(date).endsWith(month + day)) {
+    return [];
+  }
+
   const $list = $('div.sect-showtimes > ul').children('li');
 
   const movieList = Array.from($list).map(elem => {
