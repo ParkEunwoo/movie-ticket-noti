@@ -9,7 +9,7 @@ export const sendEmail = async (template) => {
     },
   });
 
-  const to = ['mansesjh22@gmail.com'];
+  const to = ['mansesjh22@gmail.com', 'dmsdn960@gmail.com'];
 
   const mailOptions = {
     from: 'dmsdn.bot@gmail.com',
