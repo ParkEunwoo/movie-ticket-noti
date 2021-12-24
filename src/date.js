@@ -21,3 +21,9 @@ export const toString = (date) => {
   const day = date.getDate();
   return `${year}${month}${day}`;
 }
+
+export const nextDate = (date) => {
+  const d = toDate(date);
+  d.setDate(d.getDate() + 1);
+  return toString(d);
+}
