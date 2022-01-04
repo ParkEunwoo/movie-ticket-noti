@@ -2,9 +2,8 @@ import {getMovieList, filter, template} from './movie.js';
 import {sendEmail} from './email.js';
 import {nextDate} from './date.js';
 
-let date = 20220108;
-
 async function main() {
+  const date = process.argv[2];
   const iparkMovieList = await getMovieList('용산아이파크몰', date);
   const imaxFilteredMovie = filter(iparkMovieList, '스파이더맨-노 웨이 홈', 'IMAX LASER 2D');
 
